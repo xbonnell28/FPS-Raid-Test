@@ -1,0 +1,2 @@
+# FPS Raid Test
+ Unity practice for an FPS with focus on "Raid Mechanics". Experimenting with interactable objects in the world that allow the player to progress through levels. These objects have different abilites/requirements that the player must learn and put together in order to accomplish the objective of each room. Not really a raid since it's one person but it's the only name I could think of.
