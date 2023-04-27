@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
 
 	[SerializeField] private float Speed = 4f;
+	[SerializeField] private float SprintSpeedMultiplier = 1.5f;
 	[SerializeField] private float CameraSensitivity = 2.0f;
 	[SerializeField] private float Gravity = 20f;
 	[SerializeField] private float JumpForce = 9f;
@@ -93,7 +94,11 @@ public class PlayerController : MonoBehaviour
 
 		Vector3 move = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		move = transform.TransformDirection(move);
-		controller.Move(Speed * Time.deltaTime * move);
+		if (Input.GetKey(KeyCode.LeftShift)) {
+			controller.Move(Speed * Time.deltaTime * move * SprintSpeedMultiplier);
+		} else {
+			controller.Move(Speed * Time.deltaTime * move);
+		}
 	}
 
 	private void HandleJump() {
