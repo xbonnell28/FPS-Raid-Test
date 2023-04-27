@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	[SerializeField] private float speed = 2f;
-	[SerializeField] private float cameraSensitivity = 2.0f;
-	[SerializeField] private float jumpHeight = 1.0f;
-	[SerializeField] private float gravity = 9.8f;
-	
+
+
+	[SerializeField] private float Speed = 4f;
+	[SerializeField] private float CameraSensitivity = 2.0f;
+	[SerializeField] private float Gravity = 20f;
+	[SerializeField] private float JumpForce = 9f;
+
 	private CharacterController controller;
 	private Camera playerCamera;
-	private Vector3 moveDirection = Vector3.zero;
 	private Vector3 playerVelocity = Vector3.zero;
-	public float lookSpeed = 2.0f;
 	public float lookXLimit = 85.0f;
 	private float rotationX = 0;
 	private bool groundedPlayer = false;
@@ -28,39 +28,47 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void Update() {
-		Debug.Log(groundedPlayer);
+		HandlePlayerMovement();
+		HandleJump();
+		HandlePlayerCamera();
+	}
+
+	private void HandlePlayerMovement() {
 		if (controller.isGrounded && playerVelocity.y < 0) {
 			playerVelocity.y = 0f;
 		}
 
-		Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		Vector3 move = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		move = transform.TransformDirection(move);
-		controller.Move(move * Time.deltaTime * speed);
+		controller.Move(Speed * Time.deltaTime * move);
+	}
 
+	private void HandleJump() {
 		// Apply jump("Space") if character is on ground
 		if (Input.GetButtonDown("Jump") && groundedPlayer) {
-			playerVelocity.y += Mathf.Sqrt(jumpHeight * gravity);
+			// Make jump apply only an up force, unmodified by previous vertical velocity
+			playerVelocity = new Vector3(playerVelocity.x, 0f, playerVelocity.z);
+			playerVelocity += Vector3.up * JumpForce;
 			groundedPlayer = false;
 		}
 
 		if (!groundedPlayer) {
-			playerVelocity.y -= Mathf.Sqrt(gravity) * Time.deltaTime;
+			// Add air accleration to make air movement feel nicer
+
+			playerVelocity += Vector3.down * Gravity * Time.deltaTime;
 		}
 
 		controller.Move(playerVelocity * Time.deltaTime);
-
-		rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-		rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-		playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-		transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 	}
 
-	private void FixedUpdate() {
+	private void HandlePlayerCamera() {
+		rotationX += -Input.GetAxis("Mouse Y") * CameraSensitivity;
+		rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+		playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+		transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * CameraSensitivity, 0);
 	}
 
 	private void OnControllerColliderHit(ControllerColliderHit hit) {
-		Rigidbody body = hit.collider.attachedRigidbody;
-
 		if (hit.gameObject.layer == LayerMask.NameToLayer("Ground")) {
 			groundedPlayer = true;
 		}
