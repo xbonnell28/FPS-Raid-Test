@@ -832,6 +832,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4937427721370011442, guid: dcc24bbf26302be45bf29d0ddb27a18e, type: 3}
+      propertyPath: AirAcceleration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4937427721370011442, guid: dcc24bbf26302be45bf29d0ddb27a18e, type: 3}
+      propertyPath: GroundCheckLayers.m_Bits
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4937427721370011447, guid: dcc24bbf26302be45bf29d0ddb27a18e, type: 3}
       propertyPath: m_RootOrder
       value: 0

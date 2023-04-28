@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 	private Vector3 GroundNormal;
 	private float LastJumpTime;
 	private float GroundCheckDistance = 0.05f;
+	public float MovementSharpnessOnGround = 15;
+	public float AirAcceleration = 3;
 	const float JumpGroundingPreventionTime = 0.2f;
 	const float GroundCheckDistanceInAir = 0.07f;
 	private void Start() {
@@ -92,18 +94,31 @@ public class PlayerController : MonoBehaviour
 			playerVelocity.y = 0f;
 		}
 
-		Vector3 move = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		float playerVelocityY = playerVelocity.y;
+		Vector3 move = new(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 		move = transform.TransformDirection(move);
+
+		float SprintSpeed = 1f;
+
+		// Might need to consider max speed here
 		if (Input.GetButton("Sprint")) {
-			controller.Move(Speed * Time.deltaTime * move * SprintSpeedMultiplier);
+			SprintSpeed = SprintSpeedMultiplier;
+			playerVelocity = move * Speed * SprintSpeedMultiplier;
 		} else {
-			controller.Move(Speed * Time.deltaTime * move);
+			playerVelocity = move * Speed;
 		}
+		// Attempted to Lerp the movement vector but it makes the character move extremely slow
+		//Vector3 CharacterVelocity = Vector3.Lerp(move, playerVelocity, MovementSharpnessOnGround * Time.deltaTime);
+		playerVelocity.y = playerVelocityY;
+		controller.Move(playerVelocity * Time.deltaTime);
+
+
 	}
 
 	private void HandleJump() {
 		// Apply jump("Space") if character is on ground
 		if (Input.GetButtonDown("Jump") && IsGrounded) {
+
 			// Make jump apply only an up force, unmodified by previous vertical velocity
 			playerVelocity = new Vector3(playerVelocity.x, 0f, playerVelocity.z);
 			playerVelocity += Vector3.up * JumpForce;
@@ -113,11 +128,19 @@ public class PlayerController : MonoBehaviour
 
 		if (!IsGrounded) {
 			// Add air accleration to make air movement feel nicer
-
+			Debug.Log("Pre Air Acceleration: " + playerVelocity);
+			playerVelocity = new Vector3(playerVelocity.x * AirAcceleration, playerVelocity.y, playerVelocity.z * AirAcceleration);
 			playerVelocity += Vector3.down * Gravity * Time.deltaTime;
+			Debug.Log("Post Air Acceleration: " + playerVelocity);
 		}
 
 		controller.Move(playerVelocity * Time.deltaTime);
+	}
+
+	// Gets a reoriented direction that is tangent to a given slope
+	public Vector3 GetDirectionReorientedOnSlope(Vector3 direction, Vector3 slopeNormal) {
+		Vector3 directionRight = Vector3.Cross(direction, transform.up);
+		return Vector3.Cross(slopeNormal, directionRight).normalized;
 	}
 
 	private void HandlePlayerCamera() {
