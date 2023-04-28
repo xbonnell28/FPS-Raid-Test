@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
 		Vector3 move = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		move = transform.TransformDirection(move);
-		if (Input.GetKey(KeyCode.LeftShift)) {
+		if (Input.GetButton("Sprint")) {
 			controller.Move(Speed * Time.deltaTime * move * SprintSpeedMultiplier);
 		} else {
 			controller.Move(Speed * Time.deltaTime * move);
