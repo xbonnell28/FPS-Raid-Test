@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
 
-	[SerializeField] private float Speed = 4f;
+	[SerializeField] private float BaseSpeed = 4f;
 	[SerializeField] private float SprintSpeedMultiplier = 1.5f;
 	[SerializeField] private float CameraSensitivity = 2.0f;
 	[SerializeField] private float Gravity = 20f;
@@ -16,13 +16,13 @@ public class PlayerController : MonoBehaviour
 
 	private CharacterController controller;
 	private Camera playerCamera;
-	private Vector3 playerVelocity = Vector3.zero;
+    private Vector3 playerVelocity = Vector3.zero;
 	public float lookXLimit = 85.0f;
 	private float rotationX = 0;
 	private bool IsGrounded = false;
 	private Vector3 GroundNormal;
 	private float LastJumpTime;
-	private float GroundCheckDistance = 0.05f;
+	private readonly float GroundCheckDistance = 0.05f;
 	public float MovementSharpnessOnGround = 15;
 	public float AirAcceleration = 3;
 	const float JumpGroundingPreventionTime = 0.2f;
@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void Update() {
-		Debug.Log(IsGrounded);
 		GroundCheck();
 		HandlePlayerMovement();
 		HandleJump();
@@ -56,10 +55,11 @@ public class PlayerController : MonoBehaviour
 		if (Time.time >= LastJumpTime + JumpGroundingPreventionTime) {
 			// if we're grounded, collect info about the ground normal with a downward capsule cast representing our character capsule
 			if (Physics.CapsuleCast(GetCapsuleBottomHemisphere(), GetCapsuleTopHemisphere(),
-				controller.radius, Vector3.down, out RaycastHit hit, chosenGroundCheckDistance, -1,
-				QueryTriggerInteraction.Ignore)) {
-				// storing the upward direction for the surface found
-				GroundNormal = hit.normal;
+				controller.radius, Vector3.down, out RaycastHit hit, chosenGroundCheckDistance))
+            {
+                Debug.Log("Player Grounded");
+                // storing the upward direction for the surface found
+                GroundNormal = hit.normal;
 
 				// Only consider this a valid ground hit if the ground normal goes in the same direction as the character up
 				// and if the slope angle is lower than the character controller's limit
@@ -98,14 +98,22 @@ public class PlayerController : MonoBehaviour
 		Vector3 move = new(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 		move = transform.TransformDirection(move);
 
-		float SprintSpeed = 1f;
+		/*float Speed = BaseSpeed;
+
+		// Attempts at adding MovementSharpness
+		if(rigidbody.velocity.magnitude > 0.1f)
+		{
+			Speed = BaseSpeed * MovementSharpnessOnGround;
+		} else
+		{
+			Speed = BaseSpeed * MovementSharpnessOnGround;
+		}*/
 
 		// Might need to consider max speed here
 		if (Input.GetButton("Sprint")) {
-			SprintSpeed = SprintSpeedMultiplier;
-			playerVelocity = move * Speed * SprintSpeedMultiplier;
+			playerVelocity = BaseSpeed * SprintSpeedMultiplier * move;
 		} else {
-			playerVelocity = move * Speed;
+			playerVelocity = move * BaseSpeed;
 		}
 		// Attempted to Lerp the movement vector but it makes the character move extremely slow
 		//Vector3 CharacterVelocity = Vector3.Lerp(move, playerVelocity, MovementSharpnessOnGround * Time.deltaTime);
@@ -128,10 +136,8 @@ public class PlayerController : MonoBehaviour
 
 		if (!IsGrounded) {
 			// Add air accleration to make air movement feel nicer
-			Debug.Log("Pre Air Acceleration: " + playerVelocity);
 			playerVelocity = new Vector3(playerVelocity.x * AirAcceleration, playerVelocity.y, playerVelocity.z * AirAcceleration);
-			playerVelocity += Vector3.down * Gravity * Time.deltaTime;
-			Debug.Log("Post Air Acceleration: " + playerVelocity);
+			playerVelocity += Gravity * Time.deltaTime * Vector3.down;
 		}
 
 		controller.Move(playerVelocity * Time.deltaTime);
@@ -143,10 +149,18 @@ public class PlayerController : MonoBehaviour
 		return Vector3.Cross(slopeNormal, directionRight).normalized;
 	}
 
-	private void HandlePlayerCamera() {
-		rotationX += -Input.GetAxis("Mouse Y") * CameraSensitivity;
-		rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-		playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-		transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * CameraSensitivity, 0);
-	}
+	private void HandlePlayerCamera()
+    {
+        // Add the vertical mouse input to the camera's X rotation
+        rotationX += -Input.GetAxis("Mouse Y") * CameraSensitivity;
+
+        // Clamp the X rotation between a minimum and maximum angle
+        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+
+        // Set the camera's local rotation based on the X rotation
+        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+
+        // Add the horizontal mouse input to the player's Y rotation
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * CameraSensitivity, 0);
+    }
 }
