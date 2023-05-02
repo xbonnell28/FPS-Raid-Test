@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class BasicEnemyRanged : BaseEnemy
+public class BasicRangedEnemy : BaseEnemy
 {
     public float RunDistance = 4f;
     public Bullet bulletPrefab;

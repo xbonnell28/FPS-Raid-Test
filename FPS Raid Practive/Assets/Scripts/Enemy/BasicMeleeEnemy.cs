@@ -4,7 +4,7 @@ using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BasicEnemyMelee : BaseEnemy
+public class BasicMeleeEnemy : BaseEnemy
 {
     public Bullet RightHand;
     private Collider RightHandCollider;
