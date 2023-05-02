@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float damage { get; set; }
+    public bool destroyOnCollision = true;
     private void Start()
     {
     }
@@ -12,11 +13,19 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
+            DestroyThisBullet();
             // Get player object and reduce health by bullet damage
             PlayerController player = other.GetComponent<PlayerController>();
             player.HandleDamage(damage);
         } else if (!other.gameObject.CompareTag("Enemy"))
+        {
+            DestroyThisBullet();
+        }
+    }
+
+    private void DestroyThisBullet()
+    {
+        if (destroyOnCollision)
         {
             Destroy(this.gameObject);
         }

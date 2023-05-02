@@ -138,8 +138,8 @@ MonoBehaviour:
   StopDistance: 1.5
   damage: 1
   AttackRate: 1
-  reach: 2.1
   RightHand: {fileID: 5049456347257721001}
+  attackSpeed: 0.2
   loop: 0
   startPoint: {fileID: 7017263534229864209}
   endPoint: {fileID: 3421093547033069628}
@@ -167,7 +167,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3421093547033069628}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -381,7 +381,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7942768110700021936}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -398,3 +398,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1845fa2e4e10fe942a57e16f3e5c2b15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyOnCollision: 0

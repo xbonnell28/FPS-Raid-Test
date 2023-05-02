@@ -6,20 +6,21 @@ using UnityEngine;
 
 public class BasicEnemyMelee : BaseEnemy
 {
-    public float reach = 1f;
-
     public Bullet RightHand;
     private Collider RightHandCollider;
 
     private float lastFireTime;
-    private float attackSpeed = 3f;
-    public bool loop = true;
+    public float attackSpeed = 0.2f;
+    public bool loop = false;
 
     public GameObject startPoint;
     public GameObject endPoint;
+    private bool stopped;
+    private bool isAttacking = false;
 
     public override void Start()
     {
+        base.Start();
         RightHandCollider = RightHand.GetComponent<Collider>();
         RightHandCollider.enabled = false;
         RightHand.damage = damage;
@@ -39,51 +40,52 @@ public class BasicEnemyMelee : BaseEnemy
 
     public override void Attack(Vector3 direction)
     {
-        if (direction.magnitude <= StopDistance)
+        if (stopped && Time.time - lastFireTime >= AttackRate)
         {
-            StartCoroutine(AttackCoroutine(direction));
+            if(!isAttacking)
+            {
+                isAttacking = true;
+                lastFireTime = Time.time;
+                StartCoroutine(AttackCoroutine());
+            }
         }
     }
 
-    IEnumerator AttackCoroutine(Vector3 direction)
+    IEnumerator AttackCoroutine()
     {
-        while(true)
+        float elapsedTime = 0.0f;
+        Vector3 start = RightHand.transform.position;
+        RightHandCollider.enabled = true;
+        while (elapsedTime < attackSpeed)
         {
-            float elapsedTime = 0.0f;
-            Vector3 start = RightHand.transform.position;
-            while (elapsedTime < AttackRate)
-            {
-                RightHand.transform.position = Vector3.Lerp(start, endPoint.transform.position, elapsedTime/AttackRate);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            RightHand.transform.position = endPoint.transform.position;
-
-            yield return new WaitForSeconds(0.5f);
-
-            elapsedTime = 0.0f;
-            start = RightHand.transform.position;
-
-            while (elapsedTime < AttackRate)
-            {
-                RightHand.transform.position = Vector3.Lerp(start, startPoint.transform.position, elapsedTime / AttackRate);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            RightHand.transform.position = startPoint.transform.position;
-
-            if (!loop) // Stop moving if loop is false
-            {
-                yield break;
-            }
+            RightHand.transform.position = Vector3.Lerp(start, endPoint.transform.position, elapsedTime / attackSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        RightHand.transform.position = endPoint.transform.position;
+
+        yield return new WaitForSeconds(0.1f);
+
+        elapsedTime = 0.0f;
+        start = RightHand.transform.position;
+
+        while (elapsedTime < attackSpeed)
+        {
+            RightHand.transform.position = Vector3.Lerp(start, startPoint.transform.position, elapsedTime / attackSpeed);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        RightHand.transform.position = startPoint.transform.position;
+        RightHandCollider.enabled = false;
+        isAttacking = false;
     }
 
     public override void Move(Vector3 direction)
     {
         // move the enemy in the given direction
+        stopped = true;
         if (direction.magnitude > StopDistance)
         {
             Vector3 normalized = direction.normalized;
@@ -91,6 +93,7 @@ public class BasicEnemyMelee : BaseEnemy
             RightHandCollider.enabled = true;
             transform.position += speed * Time.deltaTime * move.normalized;
             RightHandCollider.enabled = false;
+            stopped = false;
         }
         // TODO make look at update less frequently to remove jittering
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's

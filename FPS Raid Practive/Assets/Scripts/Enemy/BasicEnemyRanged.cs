@@ -14,6 +14,7 @@ public class BasicEnemyRanged : BaseEnemy
 
     public override void Start()
     {
+        base.Start();
         lastFireTime = Time.time;
     }
 
