@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-
 	[SerializeField] private float BaseSpeed = 4f;
 	[SerializeField] private float SprintSpeedMultiplier = 1.5f;
 	[SerializeField] private float CameraSensitivity = 2.0f;
@@ -25,11 +24,18 @@ public class PlayerController : MonoBehaviour
 	private readonly float GroundCheckDistance = 0.05f;
 	public float MovementSharpnessOnGround = 15;
 	public float AirAcceleration = 3;
+
+	// Health items
+	public float health = 100f;
+	public TextMeshProUGUI hp;
+
 	const float JumpGroundingPreventionTime = 0.2f;
 	const float GroundCheckDistanceInAir = 0.07f;
 	private void Start() {
 		controller = GetComponent<CharacterController>();
 		playerCamera = GetComponentInChildren<Camera>();
+
+		hp.SetText("HP: " + health);
 
 		// Lock cursor
 		Cursor.lockState = CursorLockMode.Locked;
@@ -164,6 +170,7 @@ public class PlayerController : MonoBehaviour
     }
 	public void HandleDamage(float damage)
 	{
-		Debug.Log("Player has taken damage: " + damage);
+		health -= damage;
+		hp.SetText("HP: " + health);
 	}
 }
