@@ -8,31 +8,23 @@ public class BasicEnemyRanged : BaseEnemy
 {
     public float RunDistance = 4f;
     public Bullet bulletPrefab;
-    public float fireRate = 1f;
     private bool stopped;
     private float bulletSpeed = 2f;
     private float lastFireTime;
 
     public override void Start()
     {
-        base.Start();
         lastFireTime = Time.time;
     }
-    public override void Update()
-    {
-        base.Update();
-        FireAtPlayer();
-    }
 
-    private void FireAtPlayer()
+    public override void Attack(Vector3 direction)
     {
-        if(stopped && Time.time - lastFireTime >= fireRate)
+        if (stopped && Time.time - lastFireTime >= AttackRate)
         {
             // Instantiate bullet prefab at the enemy's position
             Bullet bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.damage = damage;
             // Set bullet velocity towards the player
-            Vector3 direction = (TrackPlayer()).normalized;
             bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
 
             // Set last fire time to current time
@@ -59,10 +51,5 @@ public class BasicEnemyRanged : BaseEnemy
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's
         Vector3 lookAtVector = new(playerPosition.x, transform.position.y, playerPosition.z);
         transform.LookAt(lookAtVector);
-    }
-
-    private void FireBullet()
-    {
-
     }
 }
