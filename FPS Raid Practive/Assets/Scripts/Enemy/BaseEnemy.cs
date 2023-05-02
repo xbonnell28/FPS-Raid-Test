@@ -9,16 +9,17 @@ public class BaseEnemy : MonoBehaviour
     public float Gravity = 20f;
     public float GroundCheckDistanceInAir = 1.1f;
     public float StopDistance = 1.5f;
+    public float damage = 1f;
 
     protected Vector3 playerPosition; // player position
     private Rigidbody rb;
     private bool isGrounded;
 
-    private void Start()
+    public virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-    private void Update()
+    public virtual void Update()
     {
         // get the player's position
         playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;

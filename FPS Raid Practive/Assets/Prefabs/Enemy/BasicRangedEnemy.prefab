@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4551996400703052874}
   m_Layer: 0
   m_Name: BasicRangedEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +134,8 @@ MonoBehaviour:
   GroundCheckDistanceInAir: 1.1
   StopDistance: 8
   RunDistance: 4
+  bulletPrefab: {fileID: -3605899949348957944, guid: 68d02096858de224b9f2d48d047b3832, type: 3}
+  fireRate: 1
 --- !u!1 &7325319538846729750
 GameObject:
   m_ObjectHideFlags: 0

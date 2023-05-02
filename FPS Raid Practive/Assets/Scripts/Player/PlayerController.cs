@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
 			if (Physics.CapsuleCast(GetCapsuleBottomHemisphere(), GetCapsuleTopHemisphere(),
 				controller.radius, Vector3.down, out RaycastHit hit, chosenGroundCheckDistance))
             {
-                Debug.Log("Player Grounded");
                 // storing the upward direction for the surface found
                 GroundNormal = hit.normal;
 
@@ -163,4 +162,8 @@ public class PlayerController : MonoBehaviour
         // Add the horizontal mouse input to the player's Y rotation
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * CameraSensitivity, 0);
     }
+	public void HandleDamage(float damage)
+	{
+		Debug.Log("Player has taken damage: " + damage);
+	}
 }
