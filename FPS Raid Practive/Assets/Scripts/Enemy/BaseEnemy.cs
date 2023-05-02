@@ -24,6 +24,12 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         // get the player's position
         playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        // TODO We should be passing around a normalized vector for player direction
+        // full magnitude vectors cause wonky behaviour when far away
+        // For now most places already handle this, but if you come back here to work more on enemies fix this
+        // **Think about this, whould we be passing around full magnitude or normalized**
+        // Full mag, always know player location in relation to object, have to remember to normalize
+        // Normalized, safer, low to no chance of issue when object and player far away but have to get player in the scene if distance is important for the object
         Vector3 playerVector = TrackPlayer();
         Move(playerVector);
         Attack(playerVector);

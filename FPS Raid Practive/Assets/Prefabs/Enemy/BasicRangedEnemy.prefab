@@ -137,6 +137,8 @@ MonoBehaviour:
   AttackRate: 1
   RunDistance: 4
   bulletPrefab: {fileID: -3605899949348957944, guid: 68d02096858de224b9f2d48d047b3832, type: 3}
+  isRooted: 0
+  bulletSpeed: 20
 --- !u!1 &7325319538846729750
 GameObject:
   m_ObjectHideFlags: 0
