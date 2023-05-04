@@ -1,36 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float damage { get; set; }
+    public float Damage { get; set; }
     public bool destroyOnCollision = true;
+    public string ValidTarget { get; set; }
 
     private bool hasCollided = false;
-    private void Start()
-    {
-    }
     private void OnTriggerEnter(Collider other)
     {
         if(!hasCollided)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag(ValidTarget))
             {
                 hasCollided = true;
                 DestroyThisBullet();
                 // Get player object and reduce health by bullet damage
-                PlayerController player = other.GetComponent<PlayerController>();
-                player.HandleDamage(damage);
+                BaseEntity entity = other.GetComponent<BaseEntity>();
+                entity.HandleDamage(Damage);
             }
-            else if (!other.gameObject.CompareTag("Enemy"))
+            else if (other.gameObject.CompareTag("Wall"))
             {
                 DestroyThisBullet();
             }
         }
     }
-        
-
     private void OnTriggerExit(Collider other)
     {
         hasCollided = false;

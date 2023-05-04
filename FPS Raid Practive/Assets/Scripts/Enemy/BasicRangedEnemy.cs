@@ -25,7 +25,8 @@ public class BasicRangedEnemy : BaseEnemy
         {
             // Instantiate bullet prefab at the enemy's position
             Bullet bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bullet.damage = damage;
+            bullet.ValidTarget = validTarget;
+            bullet.Damage = damage;
             // Set bullet velocity towards the player
             bullet.GetComponent<Rigidbody>().velocity = direction.normalized * bulletSpeed;
 
@@ -57,5 +58,11 @@ public class BasicRangedEnemy : BaseEnemy
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's
         Vector3 lookAtVector = new(playerPosition.x, transform.position.y, playerPosition.z);
         transform.LookAt(lookAtVector);
+    }
+
+    public override void HandleDamage(float damage)
+    {
+        health -= damage;
+        Debug.Log("Range Health: " + health);
     }
 }

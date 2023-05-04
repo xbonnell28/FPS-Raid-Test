@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseEntity
 {
 	[SerializeField] private float BaseSpeed = 4f;
 	[SerializeField] private float SprintSpeedMultiplier = 1.5f;
-	[SerializeField] private float CameraSensitivity = 2.0f;
+	[SerializeField] private float CameraSensitivity;
 	[SerializeField] private float Gravity = 20f;
 	[SerializeField] private float JumpForce = 9f;
 
 	public LayerMask GroundCheckLayers = 3;
+	public PrimaryWeapon primaryWeapon;
 
 	private CharacterController controller;
 	private Camera playerCamera;
@@ -26,7 +27,6 @@ public class PlayerController : MonoBehaviour
 	public float AirAcceleration = 3;
 
 	// Health items
-	public float health = 100f;
 	public TextMeshProUGUI hp;
 
 	const float JumpGroundingPreventionTime = 0.2f;
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 		controller = GetComponent<CharacterController>();
 		playerCamera = GetComponentInChildren<Camera>();
 
+		health = 100;
 		hp.SetText("HP: " + health);
 
 		// Lock cursor
@@ -46,10 +47,19 @@ public class PlayerController : MonoBehaviour
 		GroundCheck();
 		HandlePlayerMovement();
 		HandleJump();
-		HandlePlayerCamera();
-	}
+        HandlePlayerCamera();
+        if (Input.GetButton("Fire1"))
+        {
+            Attack();
+        }
+    }
 
-	private void GroundCheck() {
+    private void Attack()
+    {
+        primaryWeapon.Attack();
+    }
+
+    private void GroundCheck() {
 		// Make sure that the ground check distance while already in air is very small, to prevent suddenly snapping to ground
 		float chosenGroundCheckDistance =
 			IsGrounded ? (controller.skinWidth + GroundCheckDistance) : GroundCheckDistanceInAir;
@@ -168,7 +178,7 @@ public class PlayerController : MonoBehaviour
         // Add the horizontal mouse input to the player's Y rotation
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * CameraSensitivity, 0);
     }
-	public void HandleDamage(float damage)
+	public override void HandleDamage(float damage)
 	{
 		health -= damage;
 		hp.SetText("HP: " + health);

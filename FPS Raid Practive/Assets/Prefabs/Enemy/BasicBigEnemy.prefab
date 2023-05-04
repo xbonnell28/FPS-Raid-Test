@@ -121,6 +121,7 @@ MonoBehaviour:
   StopDistance: 2
   damage: 2
   AttackRate: 3
+  validTarget: Player
   RightHand: {fileID: 3458284117499020548}
   attackSpeed: 0.2
   loop: 0
