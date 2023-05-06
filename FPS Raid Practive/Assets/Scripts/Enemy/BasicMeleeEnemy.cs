@@ -20,34 +20,22 @@ public class BasicMeleeEnemy : BaseEnemy
     private bool stopped;
     private bool isAttacking = false;
 
+    private NavMeshAgent agent;
+
     public override void Start()
     {
         base.Start();
+        agent = GetComponent<NavMeshAgent>();
         RightHandCollider = RightHand.GetComponent<Collider>();
         RightHandCollider.enabled = false;
         RightHand.Damage = damage;
         RightHand.ValidTarget = validTarget;
         lastFireTime = Time.time;
     }
-    public override void Update()
-    {
-        base.Update();
-    }
-    void FixedUpdate()
-    {
-        // Check if the enemy is touching the ground
-        // This vector is centered in the capsule putting the origin at y=1 so the ground check distance needs to take this into account
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, GroundCheckDistanceInAir);
-        // Apply custom gravity to the enemy if it's not on the ground
-        if (!isGrounded)
-        {
-            rb.AddForce(Vector3.down * Gravity, ForceMode.Acceleration);
-        }
-    }
 
     public override void Attack(Vector3 direction)
     {
-        if (stopped && Time.time - lastFireTime >= AttackRate)
+        if (agent.isStopped && Time.time - lastFireTime >= AttackRate)
         {
             if(!isAttacking)
             {
@@ -92,15 +80,15 @@ public class BasicMeleeEnemy : BaseEnemy
     public override void Move(Vector3 direction)
     {
         // move the enemy in the given direction
-        stopped = true;
-        if (direction.magnitude > StopDistance)
+        if (direction.magnitude > agent.stoppingDistance)
         {
-            Vector3 normalized = direction.normalized;
-            Vector3 move = new(normalized.x, 0f, normalized.z);
-            RightHandCollider.enabled = true;
-            transform.position += speed * Time.deltaTime * move.normalized;
-            RightHandCollider.enabled = false;
-            stopped = false;
+            agent.SetDestination(playerPosition);
+            agent.isStopped = false;
+        } else
+        {
+            transform.position = transform.position;
+            rb.velocity = Vector3.zero;
+            agent.isStopped = true;
         }
         // TODO make look at update less frequently to remove jittering
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's
