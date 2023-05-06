@@ -80,7 +80,7 @@ public class BasicMeleeEnemy : BaseEnemy
     public override void Move(Vector3 direction)
     {
         // move the enemy in the given direction
-        if (direction.magnitude > StopDistance)
+        if (direction.magnitude > agent.stoppingDistance)
         {
             agent.SetDestination(playerPosition);
             agent.isStopped = false;
