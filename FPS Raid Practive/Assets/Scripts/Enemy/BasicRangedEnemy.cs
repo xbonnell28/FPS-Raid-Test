@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BasicRangedEnemy : BaseEnemy
 {
@@ -13,15 +14,17 @@ public class BasicRangedEnemy : BaseEnemy
     public float bulletSpeed = 5f;
     private float lastFireTime;
 
+    private NavMeshAgent agent;
     public override void Start()
     {
         base.Start();
+        agent = GetComponent<NavMeshAgent>();
         lastFireTime = Time.time;
     }
 
     public override void Attack(Vector3 direction)
     {
-        if (stopped && Time.time - lastFireTime >= AttackRate)
+        if (agent.isStopped && Time.time - lastFireTime >= AttackRate)
         {
             // Instantiate bullet prefab at the enemy's position
             Bullet bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
@@ -39,18 +42,18 @@ public class BasicRangedEnemy : BaseEnemy
     {
         Vector3 normalized = direction.normalized;
         Vector3 move = new(normalized.x, 0f, normalized.z);
-        stopped = true;
+        agent.isStopped = true;
         if (!isRooted) {
             // move the enemy in the given direction
-            if (direction.magnitude > StopDistance)
+            if (direction.magnitude > agent.stoppingDistance)
             {
-                transform.position += speed * Time.deltaTime * move.normalized;
-                stopped = false;
+                agent.SetDestination(playerPosition);
+                agent.isStopped = false;
             }
             else if (direction.magnitude < RunDistance)
             {
                 transform.position += speed * Time.deltaTime * -move.normalized;
-                stopped = false;
+                agent.isStopped = false;
             }
         }
         
