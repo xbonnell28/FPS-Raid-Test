@@ -817,7 +817,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicMeleeEnemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 759456691405510163, guid: 5b18cfd45c6b5af4e95e40f68c68f181, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5b18cfd45c6b5af4e95e40f68c68f181, type: 3}
 --- !u!1001 &960916242
 PrefabInstance:
