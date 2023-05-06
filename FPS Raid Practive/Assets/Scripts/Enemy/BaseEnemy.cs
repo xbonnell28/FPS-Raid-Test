@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseEnemy : MonoBehaviour
+public abstract class BaseEnemy : BaseEntity
 {
     public float speed = 5.0f; // enemy movement speed
     public float Gravity = 20f;
@@ -11,6 +11,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public float StopDistance = 1.5f;
     public float damage = 1f;
     public float AttackRate = 1f;
+    public string validTarget;
 
     protected Vector3 playerPosition; // player position
     protected Rigidbody rb;
@@ -31,7 +32,7 @@ public abstract class BaseEnemy : MonoBehaviour
         // Full mag, always know player location in relation to object, have to remember to normalize
         // Normalized, safer, low to no chance of issue when object and player far away but have to get player in the scene if distance is important for the object
         Vector3 playerVector = TrackPlayer();
-        Move(playerVector);
+        //Move(playerVector);
         Attack(playerVector);
     }
 

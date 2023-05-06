@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BasicMeleeEnemy : BaseEnemy
 {
@@ -18,13 +20,22 @@ public class BasicMeleeEnemy : BaseEnemy
     private bool stopped;
     private bool isAttacking = false;
 
+    private NavMeshAgent agent;
+
     public override void Start()
     {
         base.Start();
+        agent = GetComponent<NavMeshAgent>();
         RightHandCollider = RightHand.GetComponent<Collider>();
         RightHandCollider.enabled = false;
-        RightHand.damage = damage;
+        RightHand.Damage = damage;
+        RightHand.ValidTarget = validTarget;
         lastFireTime = Time.time;
+    }
+    public override void Update()
+    {
+        base.Update();
+        agent.destination = playerPosition;
     }
     void FixedUpdate()
     {
@@ -99,5 +110,11 @@ public class BasicMeleeEnemy : BaseEnemy
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's
         Vector3 lookAtVector = new(playerPosition.x, transform.position.y, playerPosition.z);
         transform.LookAt(lookAtVector);
+    }
+
+    public override void HandleDamage(float damage)
+    {
+        health -= damage;
+        Debug.Log("Melee Health: " + health);
     }
 }

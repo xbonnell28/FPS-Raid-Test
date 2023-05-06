@@ -135,6 +135,7 @@ MonoBehaviour:
   StopDistance: 8
   damage: 1
   AttackRate: 1
+  validTarget: Player
   RunDistance: 4
   bulletPrefab: {fileID: -3605899949348957944, guid: 68d02096858de224b9f2d48d047b3832, type: 3}
   isRooted: 0
