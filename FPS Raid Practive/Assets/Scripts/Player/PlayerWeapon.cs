@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrimaryWeapon : MonoBehaviour
+public class PlayerWeapon : MonoBehaviour
 {
     public Bullet bulletPrefab;
-    public bool isRooted = false;
     public float bulletSpeed;
     public float AttackRate;
     public float damage;
@@ -42,16 +41,21 @@ public class PrimaryWeapon : MonoBehaviour
                 targetPoint = ray.GetPoint(1000);
             }
 
-            // Instantiate bullet prefab at the enemy's position
-            Bullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-            bullet.ValidTarget = validTarget;
-            bullet.Damage = damage;
-
-            // Set bullet velocity towards the player
-            bullet.GetComponent<Rigidbody>().velocity = (targetPoint - transform.position).normalized * bulletSpeed;
+            FireProjectile(targetPoint);
 
             // Set last fire time to current time
             lastFireTime = Time.time;
         }
+    }
+
+    public virtual void FireProjectile(Vector3 targetPoint)
+    {
+        // Instantiate bullet prefab at the enemy's position
+        Bullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        bullet.ValidTarget = validTarget;
+        bullet.Damage = damage;
+
+        // Set bullet velocity towards the player
+        bullet.GetComponent<Rigidbody>().velocity = (targetPoint - transform.position).normalized * bulletSpeed;
     }
 }

@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerController : BaseEntity
 {
+	public PlayerWeapon primary;
+	public PlayerWeapon secondary;
+
+	private PlayerWeapon activeWeapon;
+
 	[SerializeField] private float BaseSpeed = 4f;
 	[SerializeField] private float SprintSpeedMultiplier = 1.5f;
 	[SerializeField] private float CameraSensitivity;
@@ -12,7 +17,6 @@ public class PlayerController : BaseEntity
 	[SerializeField] private float JumpForce = 9f;
 
 	public LayerMask GroundCheckLayers = 3;
-	public PrimaryWeapon primaryWeapon;
 
 	private CharacterController controller;
 	private Camera playerCamera;
@@ -34,6 +38,7 @@ public class PlayerController : BaseEntity
 	private void Start() {
 		controller = GetComponent<CharacterController>();
 		playerCamera = GetComponentInChildren<Camera>();
+		activeWeapon = primary;
 
 		health = 100;
 		hp.SetText("HP: " + health);
@@ -43,20 +48,39 @@ public class PlayerController : BaseEntity
 		Cursor.visible = false;
 	}
 
-	private void Update() {
-		GroundCheck();
-		HandlePlayerMovement();
-		HandleJump();
+	private void Update()
+    {
+        GroundCheck();
+        HandlePlayerMovement();
+        HandleJump();
         HandlePlayerCamera();
+        HandleWeapon();
+    }
+
+    private void HandleWeapon()
+    {
         if (Input.GetButton("Fire1"))
         {
             Attack();
+        }
+
+        if (Input.GetButtonDown("Primary Weapon"))
+        {
+            activeWeapon = primary;
+            primary.gameObject.SetActive(true);
+            secondary.gameObject.SetActive(false);
+        }
+        else if (Input.GetButtonDown("Secondary Weapon"))
+        {
+            activeWeapon = secondary;
+            primary.gameObject.SetActive(false);
+            secondary.gameObject.SetActive(true);
         }
     }
 
     private void Attack()
     {
-        primaryWeapon.Attack();
+        activeWeapon.Attack();
     }
 
     private void GroundCheck() {

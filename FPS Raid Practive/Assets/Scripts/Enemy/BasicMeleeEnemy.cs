@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BasicMeleeEnemy : BaseEnemy
 {
@@ -19,14 +20,22 @@ public class BasicMeleeEnemy : BaseEnemy
     private bool stopped;
     private bool isAttacking = false;
 
+    private NavMeshAgent agent;
+
     public override void Start()
     {
         base.Start();
+        agent = GetComponent<NavMeshAgent>();
         RightHandCollider = RightHand.GetComponent<Collider>();
         RightHandCollider.enabled = false;
         RightHand.Damage = damage;
         RightHand.ValidTarget = validTarget;
         lastFireTime = Time.time;
+    }
+    public override void Update()
+    {
+        base.Update();
+        agent.destination = playerPosition;
     }
     void FixedUpdate()
     {
