@@ -32,7 +32,7 @@ public abstract class BaseEnemy : BaseEntity
         // Full mag, always know player location in relation to object, have to remember to normalize
         // Normalized, safer, low to no chance of issue when object and player far away but have to get player in the scene if distance is important for the object
         Vector3 playerVector = TrackPlayer();
-        //Move(playerVector);
+        Move(playerVector);
         Attack(playerVector);
     }
 
