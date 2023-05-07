@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1001886803596289863}
   - component: {fileID: 2893254944870826725}
   - component: {fileID: 3491914801474965899}
-  - component: {fileID: 3175267566673300217}
+  - component: {fileID: 8753030192766848784}
   m_Layer: 0
   m_Name: BasicMeleeEnemy
   m_TagString: Enemy
@@ -145,7 +145,7 @@ MonoBehaviour:
   loop: 0
   startPoint: {fileID: 7017263534229864209}
   endPoint: {fileID: 3421093547033069628}
---- !u!195 &3175267566673300217
+--- !u!195 &8753030192766848784
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
