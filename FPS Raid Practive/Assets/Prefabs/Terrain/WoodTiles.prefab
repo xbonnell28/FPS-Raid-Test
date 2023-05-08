@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3466262387790622599}
   - component: {fileID: 3466262387790622598}
   - component: {fileID: 3466262387790622601}
-  - component: {fileID: 3466262387790622600}
+  - component: {fileID: 8582325562574439081}
   m_Layer: 0
   m_Name: WoodTiles
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3466262387790622600
+--- !u!64 &8582325562574439081
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -26,6 +26,14 @@ public class Bullet : MonoBehaviour
             {
                 DestroyThisBullet();
             }
+            else if (other.gameObject.CompareTag("Floor"))
+            {
+                DestroyThisBullet();
+            }
+            else if (other.gameObject.CompareTag("Mechanic"))
+            {
+                DestroyThisBullet();
+            }
         }
     }
     private void OnTriggerExit(Collider other)

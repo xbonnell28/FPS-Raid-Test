@@ -9,8 +9,6 @@ public class BasicRangedEnemy : BaseEnemy
 {
     public float RunDistance = 4f;
     public Bullet bulletPrefab;
-    public bool isRooted = false;
-    private bool stopped;
     public float bulletSpeed = 5f;
     private float lastFireTime;
 
@@ -19,6 +17,7 @@ public class BasicRangedEnemy : BaseEnemy
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
+        agent.isStopped = isRooted;
         lastFireTime = Time.time;
     }
 
