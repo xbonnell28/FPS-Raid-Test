@@ -11,8 +11,8 @@ public class TotemCode : MonoBehaviour
     }
     void Update()
     {
-        Vector3 playerVector = player.transform.position;
-        playerVector.y = 0;
-        gameObject.transform.LookAt(playerVector);
+        Vector3 playerPosition = player.transform.position;
+        Vector3 lookAtVector = new(playerPosition.x, transform.position.y, playerPosition.z);
+        transform.LookAt(lookAtVector);
     }
 }
