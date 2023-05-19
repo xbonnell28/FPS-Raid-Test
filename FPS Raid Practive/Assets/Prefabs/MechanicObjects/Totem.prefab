@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3437032943087187088}
+  - component: {fileID: 4043499381296060832}
   m_Layer: 0
   m_Name: Totem
   m_TagString: Untagged
@@ -35,6 +36,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4043499381296060832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056550471306110649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7316a59e4f9abd04398e3402ee18c1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LOWEST_POSSIBLE_DIGIT: 1
+  HIGHEST_POSSIBLE_DIGIT: 6
+  totemBlocks:
+  - {fileID: 2770750470570014047}
+  - {fileID: 2884875945448406960}
+  - {fileID: 4909466298975201012}
 --- !u!1 &3647060015794873847
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,13 +207,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: TotemBlock (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+      propertyPath: totem
+      value: 
+      objectReference: {fileID: 4043499381296060832}
+    - target: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 187458875478253286}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+--- !u!114 &187458875478253286 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 978424827997498009, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+  m_PrefabInstance: {fileID: 1084783570114229375}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1717076393596287574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1790650382911098409, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
   m_PrefabInstance: {fileID: 1084783570114229375}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4909466298975201012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+  m_PrefabInstance: {fileID: 1084783570114229375}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af5abf1c84a36a49923c9f04ad35071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7144153894065073467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,8 +299,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: TotemBlock (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+      propertyPath: totem
+      value: 
+      objectReference: {fileID: 4043499381296060832}
+    - target: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 7976211596727699362}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+--- !u!114 &2884875945448406960 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+  m_PrefabInstance: {fileID: 7144153894065073467}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af5abf1c84a36a49923c9f04ad35071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7976211596727699362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 978424827997498009, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+  m_PrefabInstance: {fileID: 7144153894065073467}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8934166482777907986 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1790650382911098409, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
@@ -312,8 +391,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: TotemBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+      propertyPath: totem
+      value: 
+      objectReference: {fileID: 4043499381296060832}
+    - target: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+      propertyPath: numberText
+      value: 
+      objectReference: {fileID: 6974879089053748557}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+--- !u!114 &2770750470570014047 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5416706095617774219, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+  m_PrefabInstance: {fileID: 7881210982409693140}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af5abf1c84a36a49923c9f04ad35071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6974879089053748557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 978424827997498009, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
+  m_PrefabInstance: {fileID: 7881210982409693140}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8468461273082407421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1790650382911098409, guid: 06b8f4f2bc0e449458ad91c977cb86e9, type: 3}
