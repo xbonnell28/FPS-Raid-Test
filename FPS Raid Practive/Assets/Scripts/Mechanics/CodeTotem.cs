@@ -11,12 +11,22 @@ public class CodeTotem : MonoBehaviour
     public int HIGHEST_POSSIBLE_DIGIT;
 
     public TotemBlock[] totemBlocks;
+    public HiddenCodeBlock[] hiddenCodeBlock;
 
     private int[] code;
-    private int[] currentGuess;
     private void Start()
     {
         GenerateCode();
+        UpdateHiddenCodeBlocks();
+        // Add error check to make sure there are and equal number of hidden blocks to totem blocks
+    }
+
+    private void UpdateHiddenCodeBlocks()
+    {
+        for(int i = 0; i < hiddenCodeBlock.Length; i++)
+        {
+            hiddenCodeBlock[i].correctNumber.text = code[i].ToString();
+        }
     }
 
     private void GenerateCode()
