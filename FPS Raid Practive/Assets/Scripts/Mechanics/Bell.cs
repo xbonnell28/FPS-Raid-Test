@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bell : MonoBehaviour
 {
     public BigMeleeEnemy[] BigMeleeEnemies;
+    public HiddenCodeBlock[] HiddentBlocks;
     public float RingDuration;
 
     private bool _isRinging = false;
@@ -14,6 +15,7 @@ public class Bell : MonoBehaviour
     private void Start()
     {
         _renderer = gameObject.GetComponent<Renderer>();
+        RevealHiddenBlocks(false);
     }
     private void FixedUpdate()
     {
@@ -29,13 +31,24 @@ public class Bell : MonoBehaviour
 
     private IEnumerator BellRinging()
     {
+        // Weaken All big enemies
         _isRinging = true;
         _renderer.material.color = Color.yellow;
         WeakenBigEnemy(true);
+        RevealHiddenBlocks(true);
         yield return new WaitForSeconds(RingDuration);
         _isRinging = false;
         _renderer.material.color = Color.white;
-        WeakenBigEnemy(false);  
+        WeakenBigEnemy(false);
+        RevealHiddenBlocks(false);
+    }
+
+    private void RevealHiddenBlocks(bool makeVisible)
+    {
+        foreach(HiddenCodeBlock hiddenBlock in HiddentBlocks)
+        {
+            hiddenBlock.MakeVisible(makeVisible);
+        }
     }
 
     private void WeakenBigEnemy(bool makeVulnerable)
