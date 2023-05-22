@@ -12,6 +12,7 @@ public abstract class BaseEnemy : BaseEntity
     public float damage = 1f;
     public float AttackRate = 1f;
     public string validTarget;
+    public bool isRooted = false;
 
     protected Vector3 playerPosition; // player position
     protected Rigidbody rb;

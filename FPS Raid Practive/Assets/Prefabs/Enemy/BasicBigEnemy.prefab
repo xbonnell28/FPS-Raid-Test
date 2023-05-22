@@ -123,6 +123,7 @@ MonoBehaviour:
   damage: 2
   AttackRate: 3
   validTarget: Player
+  isRooted: 0
   RightHand: {fileID: 3458284117499020548}
   attackSpeed: 0.2
   loop: 0

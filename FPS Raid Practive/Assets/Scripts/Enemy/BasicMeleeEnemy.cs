@@ -26,6 +26,7 @@ public class BasicMeleeEnemy : BaseEnemy
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
+        agent.isStopped = isRooted;
         RightHandCollider = RightHand.GetComponent<Collider>();
         RightHandCollider.enabled = false;
         RightHand.Damage = damage;
@@ -79,16 +80,20 @@ public class BasicMeleeEnemy : BaseEnemy
 
     public override void Move(Vector3 direction)
     {
-        // move the enemy in the given direction
-        if (direction.magnitude > agent.stoppingDistance)
+        if(!isRooted)
         {
-            agent.SetDestination(playerPosition);
-            agent.isStopped = false;
-        } else
-        {
-            transform.position = transform.position;
-            rb.velocity = Vector3.zero;
-            agent.isStopped = true;
+            // move the enemy in the given direction
+            if (direction.magnitude > agent.stoppingDistance)
+            {
+                agent.SetDestination(playerPosition);
+                agent.isStopped = false;
+            }
+            else
+            {
+                transform.position = transform.position;
+                rb.velocity = Vector3.zero;
+                agent.isStopped = true;
+            }
         }
         // TODO make look at update less frequently to remove jittering
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's

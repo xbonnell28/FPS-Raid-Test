@@ -30,10 +30,13 @@ public class PlayerController : BaseEntity
 	public float MovementSharpnessOnGround = 15;
 	public float AirAcceleration = 3;
 
-	// Health items
-	public TextMeshProUGUI hp;
+	private int _heldCharge = 0;
 
-	const float JumpGroundingPreventionTime = 0.2f;
+	// HUD Items
+	public TextMeshProUGUI hp;
+    public TextMeshProUGUI chargeText;
+
+    const float JumpGroundingPreventionTime = 0.2f;
 	const float GroundCheckDistanceInAir = 0.07f;
 	private void Start() {
 		controller = GetComponent<CharacterController>();
@@ -42,6 +45,7 @@ public class PlayerController : BaseEntity
 
 		health = 100;
 		hp.SetText("HP: " + health);
+		chargeText.SetText("Charge: " + _heldCharge);
 
 		// Lock cursor
 		Cursor.lockState = CursorLockMode.Locked;
@@ -206,5 +210,19 @@ public class PlayerController : BaseEntity
 	{
 		health -= damage;
 		hp.SetText("HP: " + health);
+	}
+
+	public int PullHeldCharge()
+	{
+		int tempCharge = _heldCharge;
+		_heldCharge = 0;
+        chargeText.SetText("Charge: " + _heldCharge);
+        return tempCharge;
+	}
+
+	public void AddToHeldCharge(int charge)
+	{
+		_heldCharge += charge;
+        chargeText.SetText("Charge: " + _heldCharge);
 	}
 }
