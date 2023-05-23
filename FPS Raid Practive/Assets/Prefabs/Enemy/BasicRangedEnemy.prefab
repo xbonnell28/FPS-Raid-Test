@@ -130,16 +130,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bf63c8f2206ccc44a271f2a74cba8a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 20
   speed: 5
   Gravity: 20
   GroundCheckDistanceInAir: 1.1
   StopDistance: 8
-  damage: 1
+  damage: 5
   AttackRate: 1
   validTarget: Player
+  isRooted: 0
+  ShouldSpawnCharges: 0
+  HeldCharge: 5
+  ChargeToDrop: {fileID: 1564441894797809322, guid: a3137eafb5fa5bb47bd8c9c1b437cddf, type: 3}
   RunDistance: 4
   bulletPrefab: {fileID: -3605899949348957944, guid: 68d02096858de224b9f2d48d047b3832, type: 3}
-  isRooted: 0
   bulletSpeed: 20
 --- !u!195 &4769560535471511013
 NavMeshAgent:

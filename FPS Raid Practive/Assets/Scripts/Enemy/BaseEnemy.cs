@@ -13,6 +13,10 @@ public abstract class BaseEnemy : BaseEntity
     public float AttackRate = 1f;
     public string validTarget;
     public bool isRooted = false;
+    public bool ShouldSpawnCharges;
+
+    public float HeldCharge;
+    public Charge ChargeToDrop;
 
     protected Vector3 playerPosition; // player position
     protected Rigidbody rb;
@@ -57,5 +61,25 @@ public abstract class BaseEnemy : BaseEntity
     {
         // return a vector from the enemy to the player
         return playerPosition - transform.position;
+    }
+
+    public override void HandleDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        if(ShouldSpawnCharges)
+        {
+            Transform currentTransform = this.transform;
+            Charge dropCharge = Instantiate(ChargeToDrop, currentTransform.position, Quaternion.identity);
+            dropCharge.ChargeAmount = HeldCharge;
+        }
+        Destroy(this.gameObject);
     }
 }

@@ -116,14 +116,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e845d971be339c244b7a8a044ef7c15a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 50
   speed: 5
   Gravity: 20
   GroundCheckDistanceInAir: 1.1
   StopDistance: 2
-  damage: 2
+  damage: 10
   AttackRate: 3
   validTarget: Player
   isRooted: 0
+  ShouldSpawnCharges: 0
+  HeldCharge: 10
+  ChargeToDrop: {fileID: 1564441894797809322, guid: a3137eafb5fa5bb47bd8c9c1b437cddf, type: 3}
   RightHand: {fileID: 3458284117499020548}
   attackSpeed: 0.2
   loop: 0

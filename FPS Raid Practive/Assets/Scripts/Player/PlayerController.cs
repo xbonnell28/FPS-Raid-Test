@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using TMPro;
 using UnityEngine;
 
@@ -18,22 +20,31 @@ public class PlayerController : BaseEntity
 
 	public LayerMask GroundCheckLayers = 3;
 
+	// Player Movement and Control vars
+	private float rotationX = 0;
 	private CharacterController controller;
 	private Camera playerCamera;
     private Vector3 playerVelocity = Vector3.zero;
-	public float lookXLimit = 85.0f;
-	private float rotationX = 0;
+	private readonly float lookXLimit = 85.0f;
 	private bool IsGrounded = false;
 	private Vector3 GroundNormal;
 	private float LastJumpTime;
 	private readonly float GroundCheckDistance = 0.05f;
-	public float MovementSharpnessOnGround = 15;
-	public float AirAcceleration = 3;
+	private readonly float AirAcceleration = 3;
 
-	private int _heldCharge = 0;
+	// Player Status Vars
+	public float HealthRegenDelay = 5;
+	public float HealthRegenRate = 10;
+	public float RegenAmount = 1;
+	public float MaxHealth = 100;
 
-	// HUD Items
-	public TextMeshProUGUI hp;
+	private float _heldCharge = 0;
+	private float _lastTimeDamaged;
+	private bool _isRegenerating;
+    private Coroutine _regenCoroutine;
+
+    // HUD Items
+    public TextMeshProUGUI hp;
     public TextMeshProUGUI chargeText;
 
     const float JumpGroundingPreventionTime = 0.2f;
@@ -42,6 +53,7 @@ public class PlayerController : BaseEntity
 		controller = GetComponent<CharacterController>();
 		playerCamera = GetComponentInChildren<Camera>();
 		activeWeapon = primary;
+		_lastTimeDamaged = Time.time;
 
 		health = 100;
 		hp.SetText("HP: " + health);
@@ -59,6 +71,60 @@ public class PlayerController : BaseEntity
         HandleJump();
         HandlePlayerCamera();
         HandleWeapon();
+		HandleHealthRegen();
+    }
+
+    private void UpdateUI()
+    {
+        hp.SetText("HP: " + health);
+        chargeText.SetText("Charge: " + _heldCharge);
+    }
+    public override void HandleDamage(float damage)
+    {
+        health -= damage;
+        _lastTimeDamaged = Time.time;
+		UpdateUI();
+        if (health <= 0)
+        {
+            this.enabled = false;
+            hp.SetText("Dead");
+        }
+		if (_isRegenerating)
+		{
+			StopRegeneration();
+		}
+    }
+
+    private void HandleHealthRegen()
+    {
+		if(Time.time - _lastTimeDamaged > HealthRegenDelay 
+			&& health < MaxHealth
+			&& !_isRegenerating)
+        {
+            _isRegenerating = true;
+            _regenCoroutine = StartCoroutine(RegenerateHealth());
+		}
+    }
+
+    private IEnumerator RegenerateHealth()
+    {
+		while(health < MaxHealth)
+        {
+            health += RegenAmount;
+            if (health >= MaxHealth)
+            {
+                health = MaxHealth;
+            }
+            UpdateUI();
+            yield return new WaitForSeconds(HealthRegenRate);
+		}
+		StopRegeneration();
+    }
+
+    private void StopRegeneration()
+    {
+        _isRegenerating = false;
+		StopCoroutine(_regenCoroutine);
     }
 
     private void HandleWeapon()
@@ -186,12 +252,6 @@ public class PlayerController : BaseEntity
 		controller.Move(playerVelocity * Time.deltaTime);
 	}
 
-	// Gets a reoriented direction that is tangent to a given slope
-	public Vector3 GetDirectionReorientedOnSlope(Vector3 direction, Vector3 slopeNormal) {
-		Vector3 directionRight = Vector3.Cross(direction, transform.up);
-		return Vector3.Cross(slopeNormal, directionRight).normalized;
-	}
-
 	private void HandlePlayerCamera()
     {
         // Add the vertical mouse input to the camera's X rotation
@@ -206,23 +266,18 @@ public class PlayerController : BaseEntity
         // Add the horizontal mouse input to the player's Y rotation
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * CameraSensitivity, 0);
     }
-	public override void HandleDamage(float damage)
-	{
-		health -= damage;
-		hp.SetText("HP: " + health);
-	}
 
-	public int PullHeldCharge()
+    public float PullHeldCharge()
 	{
-		int tempCharge = _heldCharge;
+        float tempCharge = _heldCharge;
 		_heldCharge = 0;
-        chargeText.SetText("Charge: " + _heldCharge);
+        UpdateUI();
         return tempCharge;
 	}
 
-	public void AddToHeldCharge(int charge)
+	public void AddToHeldCharge(float charge)
 	{
 		_heldCharge += charge;
-        chargeText.SetText("Charge: " + _heldCharge);
-	}
+        UpdateUI();
+    }
 }

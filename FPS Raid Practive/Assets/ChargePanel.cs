@@ -6,9 +6,10 @@ using UnityEngine;
 public class ChargePanel : MonoBehaviour
 {
     public TextMeshPro ChargeLevelText;
-    public int StartingCharge = 0;
+    public float StartingCharge = 0;
+    public float MaxCharge = 100;
 
-    private int _chargeLevel = 0;
+    private float _chargeLevel = 0;
 
     private void Start()
     {
@@ -18,10 +19,17 @@ public class ChargePanel : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            int chargeToAdd = player.PullHeldCharge();
-            _chargeLevel += chargeToAdd;
-            ChargeLevelText.text = _chargeLevel.ToString();
+            if(_chargeLevel < MaxCharge)
+            {
+                PlayerController player = other.GetComponent<PlayerController>();
+                float chargeToAdd = player.PullHeldCharge();
+                _chargeLevel += chargeToAdd;
+                ChargeLevelText.text = _chargeLevel.ToString();
+            } else
+            {
+                _chargeLevel = MaxCharge;
+                ChargeLevelText.text = "Full Charge";
+            }
         }
     }
 }
