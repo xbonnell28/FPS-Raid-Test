@@ -370,6 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3441021b5b7d8464ca9363aafb147c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   primary: {fileID: 3659406896338915189}
   secondary: {fileID: 4481048416521953847}
   BaseSpeed: 4
@@ -380,11 +381,12 @@ MonoBehaviour:
   GroundCheckLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  lookXLimit: 85
-  MovementSharpnessOnGround: 15
-  AirAcceleration: 3
+  HealthRegenDelay: 3
+  HealthRegenRate: 0.1
+  RegenAmount: 1
+  MaxHealth: 100
   hp: {fileID: 1379328321311848983}
-  charge: {fileID: 8812407588399125060}
+  chargeText: {fileID: 8812407588399125060}
 --- !u!1001 &3477431800582782362
 PrefabInstance:
   m_ObjectHideFlags: 0

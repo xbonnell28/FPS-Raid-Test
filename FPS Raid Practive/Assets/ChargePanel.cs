@@ -7,6 +7,7 @@ public class ChargePanel : MonoBehaviour
 {
     public TextMeshPro ChargeLevelText;
     public float StartingCharge = 0;
+    public float MaxCharge = 100;
 
     private float _chargeLevel = 0;
 
@@ -18,10 +19,17 @@ public class ChargePanel : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")) 
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            float chargeToAdd = player.PullHeldCharge();
-            _chargeLevel += chargeToAdd;
-            ChargeLevelText.text = _chargeLevel.ToString();
+            if(_chargeLevel < MaxCharge)
+            {
+                PlayerController player = other.GetComponent<PlayerController>();
+                float chargeToAdd = player.PullHeldCharge();
+                _chargeLevel += chargeToAdd;
+                ChargeLevelText.text = _chargeLevel.ToString();
+            } else
+            {
+                _chargeLevel = MaxCharge;
+                ChargeLevelText.text = "Full Charge";
+            }
         }
     }
 }
