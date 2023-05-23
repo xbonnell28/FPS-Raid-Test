@@ -139,6 +139,8 @@ MonoBehaviour:
   AttackRate: 1
   validTarget: Player
   isRooted: 0
+  HeldCharge: 0
+  ChargeToDrop: {fileID: 1564441894797809322, guid: a3137eafb5fa5bb47bd8c9c1b437cddf, type: 3}
   RunDistance: 4
   bulletPrefab: {fileID: -3605899949348957944, guid: 68d02096858de224b9f2d48d047b3832, type: 3}
   bulletSpeed: 20

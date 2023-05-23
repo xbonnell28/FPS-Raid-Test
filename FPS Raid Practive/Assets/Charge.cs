@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Charge : MonoBehaviour
 {
-    public int ChargeAmount = 0;
+    public float ChargeAmount = 0;
 
     private void OnTriggerEnter(Collider other)
     {

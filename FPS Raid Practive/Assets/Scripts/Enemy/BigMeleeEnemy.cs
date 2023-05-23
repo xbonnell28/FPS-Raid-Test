@@ -23,7 +23,7 @@ public class BigMeleeEnemy : BasicMeleeEnemy
             health -= damage;
             if (health <= 0)
             {
-                Destroy(this.gameObject);
+                Die();
             }
         }
     }

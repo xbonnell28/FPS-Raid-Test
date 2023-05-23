@@ -14,6 +14,9 @@ public abstract class BaseEnemy : BaseEntity
     public string validTarget;
     public bool isRooted = false;
 
+    public float HeldCharge;
+    public Charge ChargeToDrop;
+
     protected Vector3 playerPosition; // player position
     protected Rigidbody rb;
     protected bool isGrounded;
@@ -64,7 +67,15 @@ public abstract class BaseEnemy : BaseEntity
         health -= damage;
         if (health <= 0)
         {
-            Destroy(this.gameObject);
+            Die();
         }
+    }
+
+    public void Die()
+    {
+        Transform currentTransform = this.transform;
+        Charge dropCharge = Instantiate(ChargeToDrop, currentTransform.position, Quaternion.identity);
+        dropCharge.ChargeAmount = HeldCharge;
+        Destroy(this.gameObject);
     }
 }
