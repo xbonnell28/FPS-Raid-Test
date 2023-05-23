@@ -58,4 +58,13 @@ public abstract class BaseEnemy : BaseEntity
         // return a vector from the enemy to the player
         return playerPosition - transform.position;
     }
+
+    public override void HandleDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

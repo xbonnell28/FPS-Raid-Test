@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90043bb9b58f2cb49b02183f10dd8655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 15
   speed: 5
   Gravity: 20
   GroundCheckDistanceInAir: 1.1
@@ -140,6 +141,7 @@ MonoBehaviour:
   damage: 1
   AttackRate: 1
   validTarget: Player
+  isRooted: 0
   RightHand: {fileID: 3513626940543813770}
   attackSpeed: 0.2
   loop: 0

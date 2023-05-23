@@ -61,10 +61,4 @@ public class BasicRangedEnemy : BaseEnemy
         Vector3 lookAtVector = new(playerPosition.x, transform.position.y, playerPosition.z);
         transform.LookAt(lookAtVector);
     }
-
-    public override void HandleDamage(float damage)
-    {
-        health -= damage;
-        Debug.Log("Range Health: " + health);
-    }
 }

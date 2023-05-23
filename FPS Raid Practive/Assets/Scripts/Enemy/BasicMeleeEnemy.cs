@@ -17,7 +17,6 @@ public class BasicMeleeEnemy : BaseEnemy
 
     public GameObject startPoint;
     public GameObject endPoint;
-    private bool stopped;
     private bool isAttacking = false;
 
     private NavMeshAgent agent;
@@ -99,11 +98,5 @@ public class BasicMeleeEnemy : BaseEnemy
         // Remove vertical component of look at. If it's here then we get weird jittering due to player transform and enemy transform having slightly different z's
         Vector3 lookAtVector = new(playerPosition.x, transform.position.y, playerPosition.z);
         transform.LookAt(lookAtVector);
-    }
-
-    public override void HandleDamage(float damage)
-    {
-        health -= damage;
-        Debug.Log("Melee Health: " + health);
     }
 }

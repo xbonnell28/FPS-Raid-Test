@@ -15,12 +15,16 @@ public class BigMeleeEnemy : BasicMeleeEnemy
         _renderer.material.color = Color.gray;
     }
 
+    // Need to handle damage here for when the BigEnemy is invulnerable
     public override void HandleDamage(float damage)
     {
         if(_isVulnerable)
         {
             health -= damage;
-            Debug.Log("Taking Damage");
+            if (health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
