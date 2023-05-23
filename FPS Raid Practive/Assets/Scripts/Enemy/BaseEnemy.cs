@@ -13,6 +13,7 @@ public abstract class BaseEnemy : BaseEntity
     public float AttackRate = 1f;
     public string validTarget;
     public bool isRooted = false;
+    public bool ShouldSpawnCharges;
 
     public float HeldCharge;
     public Charge ChargeToDrop;
@@ -73,9 +74,12 @@ public abstract class BaseEnemy : BaseEntity
 
     public void Die()
     {
-        Transform currentTransform = this.transform;
-        Charge dropCharge = Instantiate(ChargeToDrop, currentTransform.position, Quaternion.identity);
-        dropCharge.ChargeAmount = HeldCharge;
+        if(ShouldSpawnCharges)
+        {
+            Transform currentTransform = this.transform;
+            Charge dropCharge = Instantiate(ChargeToDrop, currentTransform.position, Quaternion.identity);
+            dropCharge.ChargeAmount = HeldCharge;
+        }
         Destroy(this.gameObject);
     }
 }
