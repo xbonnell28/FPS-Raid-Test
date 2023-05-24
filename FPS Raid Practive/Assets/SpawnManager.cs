@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
 {
     public EnemySpawner[] enemySpawners;
 
-    public void SpawnEntities()
+    public virtual void SpawnEntities()
     {
         if (ShouldSpawnEnemies())
         {
@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private bool ShouldSpawnEnemies()
+    protected bool ShouldSpawnEnemies()
     {
         float totalSpawnedEnemies = 0;
         for (int i = 0; i < enemySpawners.Length; i++)

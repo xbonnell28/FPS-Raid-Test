@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class BigMeleeEnemy : BasicMeleeEnemy
 {
-    public Bell Bell { get; private set; }
-
     private bool _isVulnerable = false;
     private Renderer _renderer;
     public override void Start()
     {
         base.Start();
-        _renderer = gameObject.GetComponent<Renderer>();
-        _renderer.material.color = Color.gray;
     }
 
     // Need to handle damage here for when the BigEnemy is invulnerable
@@ -30,6 +26,8 @@ public class BigMeleeEnemy : BasicMeleeEnemy
 
     public void MakeVulnerable(bool makeVulnerable)
     {
+        _renderer = gameObject.GetComponent<Renderer>();
+        _renderer.material.color = Color.gray;
         _isVulnerable = makeVulnerable;
         if(_isVulnerable)
         {
