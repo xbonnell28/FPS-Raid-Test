@@ -7,16 +7,19 @@ public class EnemySpawner : MonoBehaviour
     public BaseEnemy EnemyPrefab;
 
     // Tracks whether this spawn point has an active enemy spawned
-    private bool hasEctiveEnemy { get; set; }
+    public bool hasActiveEnemy { get; set; }
     public void SpawnEnemy()
     {
-        BaseEnemy enemy = Instantiate(EnemyPrefab, transform.position, Quaternion.identity);
-        enemy.spawnPoint = this;
-        hasEctiveEnemy = true;
+        if(!hasActiveEnemy)
+        {
+            BaseEnemy enemy = Instantiate(EnemyPrefab, transform.position, Quaternion.identity);
+            enemy.spawnPoint = this;
+            hasActiveEnemy = true;
+        }
     }
 
     public void EnemyDestroyed()
     {
-        hasEctiveEnemy = false;
+        hasActiveEnemy = false;
     }
 }
