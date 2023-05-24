@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Bell : MonoBehaviour
 {
-    public BigMeleeEnemy[] BigMeleeEnemies;
     public HiddenCodeBlock[] HiddentBlocks;
+    public SpawnManager[] SpawnManagers;
+
     public float RingDuration;
 
     private bool _isRinging = false;
@@ -25,7 +26,16 @@ public class Bell : MonoBehaviour
     {
         if(!_isRinging)
         {
+            CheckSpawnManagers();
             StartCoroutine(BellRinging());
+        }
+    }
+
+    private void CheckSpawnManagers()
+    {
+        foreach(SpawnManager spawnManager in SpawnManagers)
+        {
+            spawnManager.SpawnEntities();
         }
     }
 
@@ -41,21 +51,29 @@ public class Bell : MonoBehaviour
         _renderer.material.color = Color.white;
         WeakenBigEnemy(false);
         RevealHiddenBlocks(false);
+        StopCoroutine(BellRinging());
     }
 
     private void RevealHiddenBlocks(bool makeVisible)
     {
-        foreach(HiddenCodeBlock hiddenBlock in HiddentBlocks)
+        if(HiddentBlocks.Length > 0)
         {
-            hiddenBlock.MakeVisible(makeVisible);
+            foreach (HiddenCodeBlock hiddenBlock in HiddentBlocks)
+            {
+                hiddenBlock.MakeVisible(makeVisible);
+            }
         }
     }
 
     private void WeakenBigEnemy(bool makeVulnerable)
     {
-        foreach(BigMeleeEnemy enemy in BigMeleeEnemies) 
+        BigMeleeEnemy[] bigMeleeEnemies = FindObjectsOfType<BigMeleeEnemy>();
+        if(bigMeleeEnemies.Length > 0)
         {
-            enemy.MakeVulnerable(makeVulnerable);
+            foreach (BigMeleeEnemy enemy in bigMeleeEnemies)
+            {
+                enemy.MakeVulnerable(makeVulnerable);
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ public class BasicMeleeEnemy : BaseEnemy
     {
         if (agent.isStopped && Time.time - lastFireTime >= AttackRate)
         {
-            if(!isAttacking)
+            if (!isAttacking)
             {
                 isAttacking = true;
                 lastFireTime = Time.time;
@@ -79,7 +79,7 @@ public class BasicMeleeEnemy : BaseEnemy
 
     public override void Move(Vector3 direction)
     {
-        if(!isRooted)
+        if (!isRooted)
         {
             // move the enemy in the given direction
             if (direction.magnitude > agent.stoppingDistance)

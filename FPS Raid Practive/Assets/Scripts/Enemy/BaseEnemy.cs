@@ -22,6 +22,8 @@ public abstract class BaseEnemy : BaseEntity
     protected Rigidbody rb;
     protected bool isGrounded;
 
+    public EnemySpawner spawnPoint { get; set; }
+
     public virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -80,6 +82,7 @@ public abstract class BaseEnemy : BaseEntity
             Charge dropCharge = Instantiate(ChargeToDrop, currentTransform.position, Quaternion.identity);
             dropCharge.ChargeAmount = HeldCharge;
         }
+        spawnPoint.EnemyDestroyed();
         Destroy(this.gameObject);
     }
 }
