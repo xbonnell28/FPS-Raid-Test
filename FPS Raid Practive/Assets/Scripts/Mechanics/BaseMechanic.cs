@@ -6,7 +6,7 @@ public class BaseMechanic : MonoBehaviour
 {
     public BaseMechanic linkedMechanic;
     //Determines whether or not this mechanic should be active
-    public bool isActive { get; set; }
+    [SerializeField] public bool isActive;
 
     public void Activate()
     {

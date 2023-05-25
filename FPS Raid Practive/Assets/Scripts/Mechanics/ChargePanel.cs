@@ -25,9 +25,12 @@ public class ChargePanel : BaseMechanic
                 float chargeToAdd = player.PullHeldCharge();
                 _chargeLevel += chargeToAdd;
                 ChargeLevelText.text = _chargeLevel.ToString();
-            } else
+            }
+            
+            if(_chargeLevel >= MaxCharge)
             {
                 _chargeLevel = MaxCharge;
+                ChargeLevelText.text = "Full";
                 ActivateLinkedMechanic();
                 Deactivate();
             }

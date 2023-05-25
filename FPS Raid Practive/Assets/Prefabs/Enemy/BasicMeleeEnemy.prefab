@@ -142,10 +142,9 @@ MonoBehaviour:
   AttackRate: 1
   validTarget: Player
   isRooted: 0
-  ShouldSpawnCharges: 0
+  ShouldSpawnCharges: 1
   HeldCharge: 1
   ChargeToDrop: {fileID: 1564441894797809322, guid: a3137eafb5fa5bb47bd8c9c1b437cddf, type: 3}
-  spawnPoint: {fileID: 1221295067233854564, guid: 26f4252150dd1df4dba9c8b61ba26e70, type: 3}
   RightHand: {fileID: 3513626940543813770}
   attackSpeed: 0.2
   loop: 0

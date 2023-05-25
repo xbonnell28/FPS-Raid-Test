@@ -12,7 +12,7 @@ public class CodeTotem : BaseMechanic
 
     public TotemBlock[] totemBlocks;
     public HiddenCodeBlock[] hiddenCodeBlock;
-    public GameManager blocker;
+    public Collider blocker;
 
     private int[] code;
     private void Start()
@@ -24,7 +24,7 @@ public class CodeTotem : BaseMechanic
 
     private void Update()
     {
-        blocker.gameObject.SetActive(!isActive);
+        blocker.enabled = !isActive;
     }
 
     private void UpdateHiddenCodeBlocks()
@@ -63,7 +63,7 @@ public class CodeTotem : BaseMechanic
         }
         if(solutionFound)
         {
-            Debug.Log("Solution Found");
+            ActivateLinkedMechanic();
         }
         else
         {
