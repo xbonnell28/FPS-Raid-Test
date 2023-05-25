@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ChargePanel : MonoBehaviour
+public class ChargePanel : BaseMechanic
 {
     public TextMeshPro ChargeLevelText;
     public float StartingCharge = 0;
@@ -17,7 +17,7 @@ public class ChargePanel : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")) 
+        if (isActive && other.gameObject.CompareTag("Player")) 
         {
             if(_chargeLevel < MaxCharge)
             {
@@ -25,10 +25,14 @@ public class ChargePanel : MonoBehaviour
                 float chargeToAdd = player.PullHeldCharge();
                 _chargeLevel += chargeToAdd;
                 ChargeLevelText.text = _chargeLevel.ToString();
-            } else
+            }
+            
+            if(_chargeLevel >= MaxCharge)
             {
                 _chargeLevel = MaxCharge;
-                ChargeLevelText.text = "Full Charge";
+                ChargeLevelText.text = "Full";
+                ActivateLinkedMechanic();
+                Deactivate();
             }
         }
     }

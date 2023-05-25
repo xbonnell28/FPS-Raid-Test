@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3437032943087187088}
   - component: {fileID: 4043499381296060832}
+  - component: {fileID: 6931979633777053956}
   m_Layer: 0
   m_Name: Totem
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,12 +49,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7316a59e4f9abd04398e3402ee18c1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  linkedMechanic: {fileID: 0}
+  isActive: 0
   LOWEST_POSSIBLE_DIGIT: 1
   HIGHEST_POSSIBLE_DIGIT: 6
   totemBlocks:
   - {fileID: 2770750470570014047}
   - {fileID: 2884875945448406960}
   - {fileID: 4909466298975201012}
+  hiddenCodeBlock: []
+  blocker: {fileID: 6931979633777053956}
+--- !u!65 &6931979633777053956
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056550471306110649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 3.5, z: 2}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &3647060015794873847
 GameObject:
   m_ObjectHideFlags: 0

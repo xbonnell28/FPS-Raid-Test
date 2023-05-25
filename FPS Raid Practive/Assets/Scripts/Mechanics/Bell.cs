@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bell : MonoBehaviour
+public class Bell : BaseMechanic
 {
     public HiddenCodeBlock[] HiddentBlocks;
     public SpawnManager[] SpawnManagers;
@@ -18,13 +18,9 @@ public class Bell : MonoBehaviour
         _renderer = gameObject.GetComponent<Renderer>();
         RevealHiddenBlocks(false);
     }
-    private void FixedUpdate()
-    {
-        if(_isRinging) return;
-    }
     private void OnTriggerEnter(Collider other)
     {
-        if(!_isRinging)
+        if(isActive && !_isRinging)
         {
             CheckSpawnManagers();
             StartCoroutine(BellRinging());

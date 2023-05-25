@@ -5,13 +5,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CodeTotem : MonoBehaviour
+public class CodeTotem : BaseMechanic
 {
     public int LOWEST_POSSIBLE_DIGIT;
     public int HIGHEST_POSSIBLE_DIGIT;
 
     public TotemBlock[] totemBlocks;
     public HiddenCodeBlock[] hiddenCodeBlock;
+    public Collider blocker;
 
     private int[] code;
     private void Start()
@@ -19,6 +20,11 @@ public class CodeTotem : MonoBehaviour
         GenerateCode();
         UpdateHiddenCodeBlocks();
         // Add error check to make sure there are and equal number of hidden blocks to totem blocks
+    }
+
+    private void Update()
+    {
+        blocker.enabled = !isActive;
     }
 
     private void UpdateHiddenCodeBlocks()
@@ -57,7 +63,7 @@ public class CodeTotem : MonoBehaviour
         }
         if(solutionFound)
         {
-            Debug.Log("Solution Found");
+            ActivateLinkedMechanic();
         }
         else
         {
