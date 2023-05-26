@@ -7,8 +7,10 @@ public class Bell : BaseMechanic
 {
     public HiddenCodeBlock[] HiddentBlocks;
     public SpawnManager[] SpawnManagers;
+    public Boss boss;
 
     public float RingDuration;
+    public bool infiniteRing = false;
 
     private bool _isRinging = false;
     private Renderer _renderer;
@@ -20,11 +22,21 @@ public class Bell : BaseMechanic
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(isActive && !_isRinging)
+        if(!isActive && !_isRinging)
         {
             CheckSpawnManagers();
             StartCoroutine(BellRinging());
         }
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+        _isRinging = true;
+        _renderer.material.color = Color.blue;
+        WeakenBigEnemy(true);
+        RevealHiddenBlocks(true);
+        boss.enraged = true;
     }
 
     private void CheckSpawnManagers()
