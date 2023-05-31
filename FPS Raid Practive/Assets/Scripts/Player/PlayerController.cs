@@ -7,8 +7,13 @@ using UnityEngine;
 
 public class PlayerController : BaseEntity
 {
+	// Weapons
 	public PlayerWeapon primary;
 	public PlayerWeapon secondary;
+	public Grenade grenade;
+	public float abilityCooldown;
+
+	private float lastAbilityTime;
 
 	private PlayerWeapon activeWeapon;
 
@@ -71,6 +76,7 @@ public class PlayerController : BaseEntity
         HandleJump();
         HandlePlayerCamera();
         HandleWeapon();
+		HandleAbility();
 		HandleHealthRegen();
     }
 
@@ -147,6 +153,18 @@ public class PlayerController : BaseEntity
             secondary.gameObject.SetActive(true);
         }
     }
+
+	private void HandleAbility()
+	{
+		if (Input.GetButtonDown("Ability") && Time.time - lastAbilityTime >= abilityCooldown)
+		{
+			print("Grenade");
+			Vector3 grenadeStart = transform.position;
+			grenadeStart.z += 1;
+			Instantiate(grenade, grenadeStart, Quaternion.identity);
+			lastAbilityTime = Time.time;
+		}
+	}
 
     private void Attack()
     {

@@ -373,6 +373,8 @@ MonoBehaviour:
   health: 0
   primary: {fileID: 3659406896338915189}
   secondary: {fileID: 4481048416521953847}
+  grenade: {fileID: 45275273614978588, guid: f665834219468d44d86c5615a3c2a962, type: 3}
+  abilityCooldown: 5
   BaseSpeed: 4
   SprintSpeedMultiplier: 1.5
   CameraSensitivity: 0.8
