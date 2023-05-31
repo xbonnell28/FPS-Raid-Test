@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BigMeleeEnemy : BasicMeleeEnemy
 {
-    private bool _isVulnerable = false;
+    public bool _isVulnerable = true;
     private Renderer _renderer;
     public override void Start()
     {

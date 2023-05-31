@@ -10,9 +10,9 @@ public class BasicRangedEnemy : BaseEnemy
     public float RunDistance = 4f;
     public Bullet bulletPrefab;
     public float bulletSpeed = 5f;
-    private float lastFireTime;
+    protected float lastFireTime;
 
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
     public override void Start()
     {
         base.Start();

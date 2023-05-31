@@ -8,7 +8,7 @@ public class BaseMechanic : MonoBehaviour
     //Determines whether or not this mechanic should be active
     [SerializeField] public bool isActive;
 
-    public void Activate()
+    public virtual void Activate()
     {
         isActive = true;
     }

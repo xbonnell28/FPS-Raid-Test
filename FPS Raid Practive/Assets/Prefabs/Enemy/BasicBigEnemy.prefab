@@ -133,6 +133,7 @@ MonoBehaviour:
   loop: 0
   startPoint: {fileID: 4486609316244909683}
   endPoint: {fileID: 7140798242289897849}
+  _isVulnerable: 1
 --- !u!54 &2893254944870826725
 Rigidbody:
   m_ObjectHideFlags: 0
