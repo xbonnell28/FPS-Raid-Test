@@ -11,6 +11,7 @@ public class BaseMechanic : MonoBehaviour
     public virtual void Activate()
     {
         isActive = true;
+        enabled = isActive;
     }
 
     public void Deactivate()

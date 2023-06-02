@@ -13,7 +13,7 @@ public class ChargePanel : BaseMechanic
 
     private void Start()
     {
-        ChargeLevelText.text = StartingCharge.ToString();
+        UpdateText();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -24,7 +24,7 @@ public class ChargePanel : BaseMechanic
                 PlayerController player = other.GetComponent<PlayerController>();
                 float chargeToAdd = player.PullHeldCharge();
                 _chargeLevel += chargeToAdd;
-                ChargeLevelText.text = _chargeLevel.ToString();
+                UpdateText();
             }
             
             if(_chargeLevel >= MaxCharge)
@@ -35,5 +35,10 @@ public class ChargePanel : BaseMechanic
                 Deactivate();
             }
         }
+    }
+
+    private void UpdateText()
+    {
+        ChargeLevelText.text = _chargeLevel.ToString() + "/" + MaxCharge.ToString();
     }
 }
