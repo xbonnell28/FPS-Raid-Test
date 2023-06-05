@@ -74,7 +74,7 @@ public abstract class BaseEnemy : BaseEntity
         }
     }
 
-    public void Die()
+    public virtual void Die()
     {
         if(ShouldSpawnCharges)
         {

@@ -180,7 +180,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: -3605899949348957944, guid: 68d02096858de224b9f2d48d047b3832, type: 3}
   bulletSpeed: 25
-  AttackRate: 0.5
-  damage: 1
+  AttackRate: 2
+  damage: 10
   validTarget: Enemy
   Camera: {fileID: 0}
+  numPellets: 9
+  spreadAngle: 20

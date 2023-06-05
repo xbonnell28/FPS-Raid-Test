@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Boss : BasicRangedEnemy
 {
     public SpawnManager sm;
     public bool enraged;
+    public float maxHealth;
+    public TextMeshProUGUI bossHealth;
 
     public override void Update()
     {
         base.Update();
+        bossHealth.text = health + "/" + maxHealth;
         if(enraged)
         {
             sm.SpawnEntities();
@@ -31,5 +35,17 @@ public class Boss : BasicRangedEnemy
             lastFireTime = Time.time;
         }
     }
+    public override void Die()
+    {
+        Destroy(gameObject);
+        bossHealth.text = "You Win!";
+    }
 
+    public override void HandleDamage(float damage)
+    {
+        if(enraged)
+        {
+            base.HandleDamage(damage);
+        }
+    }
 }

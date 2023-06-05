@@ -27,6 +27,11 @@ public class Bell : BaseMechanic
             CheckSpawnManagers();
             StartCoroutine(BellRinging());
         }
+
+        if(isActive)
+        {
+            CheckSpawnManagers();
+        }
     }
 
     public override void Activate()
@@ -37,6 +42,8 @@ public class Bell : BaseMechanic
         WeakenBigEnemy(true);
         RevealHiddenBlocks(true);
         boss.enraged = true;
+        Renderer renderer1 = boss.GetComponent<Renderer>();
+        renderer1.material.color = Color.white;
     }
 
     private void CheckSpawnManagers()
